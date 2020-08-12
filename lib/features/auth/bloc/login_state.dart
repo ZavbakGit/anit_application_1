@@ -9,7 +9,10 @@ abstract class LoginState extends Equatable {
   List<Object> get props => [];
 }
 
-class InitialState extends LoginState {}
+class InitialState extends LoginState {
+  @override
+  List<Object> get props =>[];
+}
 
 class LoadSettingsState extends LoginState {
   final String message;
@@ -24,12 +27,12 @@ class LoginInProgressState extends LoginState {}
 
 class LoadSettingsSuccessState extends LoginState {
   final LoginInfo loginInfo;
+  final String message;
 
-  LoadSettingsSuccessState(this.loginInfo);
+  LoadSettingsSuccessState(this.loginInfo, this.message);
 
   @override
-  List<Object> get props => [loginInfo];
-
+  List<Object> get props => [loginInfo,message];
 }
 
 class LoginFailState extends LoginState {

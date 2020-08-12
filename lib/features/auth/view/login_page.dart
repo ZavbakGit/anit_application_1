@@ -6,21 +6,20 @@ import 'package:anit_application/model/login_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<LoginBloc>(
-        create: (context) => LoginBloc(appModel: AppModel()),
-        child: LoginScreen());
-  }
-}
+    final appModel = Provider.of<AppModel>(context);
 
-class MyPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('Hi')),
+      body: SafeArea(
+        child: Center(
+          child: BlocProvider(
+              create: (context) => LoginBloc(appModel), child: LoginScreen()),
+        ),
+      ),
     );
   }
 }
@@ -28,9 +27,126 @@ class MyPage extends StatelessWidget {
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<LoginBloc, LoginState>(
+      builder: (context, state) {
+        if (state is InitialState) {
+          BlocProvider.of<LoginBloc>(context).add(LoadSettingsEvent());
+          return Text('');
+        }
+
+        if (state is LoadSettingsState) {
+          return ProgressWidget();
+        }
+
+        if (state is LoginInProgressState) {
+          return ProgressWidget();
+        }
+
+        if (state is LoadSettingsSuccessState) {
+          final _passTextFieldController = TextEditingController();
+          final _userTextFieldController = TextEditingController();
+
+          _userTextFieldController.text = state.loginInfo.user ?? '';
+          _passTextFieldController.text = state.loginInfo.pass ?? '';
+
+          if (state.message.isNotEmpty){
+            Scaffold.of(context).showSnackBar(
+                SnackBar(content: Text("state.message")));
+          }
+
+          return Card(
+            semanticContainer: true,
+            margin: EdgeInsets.all(24),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 16.0,
+                  ),
+                  TextField(
+                    controller: _userTextFieldController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Enter User Here',
+                        labelText: 'User'),
+                    autofocus: false,
+                  ),
+                  SizedBox(
+                    height: 16.0,
+                  ),
+                  TextField(
+                    controller: _passTextFieldController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Enter Password Here',
+                        labelText: 'Password'),
+                    autofocus: false,
+                    obscureText: true,
+                  ),
+                  ButtonBar(
+                    children: <Widget>[
+                      RaisedButton(
+                        child: Text('Next'),
+                        onPressed: () {
+                          BlocProvider.of<LoginBloc>(context).add(
+                            StartLoginEvent(
+                              LoginInfo(
+                                  pass: _passTextFieldController.text,
+                                  user: _userTextFieldController.text),
+                            ),
+                          );
+                        },
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        }
+
+//        if (state is LoadSettingsState) {
+//          return Column(
+//            children: <Widget>[
+//              CircularProgressIndicator(),
+//              Text(state.message),
+//            ],
+//          );
+//        }
+
+        return Text('Unknown state');
+      },
+    );
+  }
+}
+
+class ProgressWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CircularProgressIndicator();
+
+    Container(
+      height: 300,
+      width: 400,
+      child: Card(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        elevation: 4.0,
+        child: Center(child: CircularProgressIndicator()),
+      ),
+    );
+  }
+}
+
+class LoginScreen1 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hi'),
+        title: Text('АНИТ'),
       ),
       body: Center(
         child: Container(
@@ -43,12 +159,7 @@ class LoginScreen extends StatelessWidget {
             elevation: 4.0,
             child: Column(
               children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    TextFieldWidget(),
-                    CircularProgressIndicator()
-                  ],
-                ),
+                TextFieldWidget(),
                 ButtonWidget(),
               ],
             ),

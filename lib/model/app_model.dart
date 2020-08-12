@@ -4,6 +4,9 @@ import 'package:anit_application/model/user.dart';
 class AppModel{
   LoginInfo _loginInfo;
   User _user;
+  final DateTime dateCreate;
+
+  AppModel({this.dateCreate});
 
   LoginInfo get loginInfo => _loginInfo;
 

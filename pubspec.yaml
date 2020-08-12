@@ -36,6 +36,7 @@ dependencies:
   flutter_login: ^1.0.14
   meta: ^1.1.8
   uuid: ^2.2.0
+  provider: ^4.3.2
 
 dev_dependencies:
   flutter_test:
