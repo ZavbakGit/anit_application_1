@@ -17,7 +17,19 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: BlocProvider(
-              create: (context) => LoginBloc(appModel), child: LoginScreen()),
+            create: (context) => LoginBloc(appModel),
+            child: BlocListener(
+                listener: (context, state) {
+                  if (state.message.isNotEmpty) {
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.message),
+                      ),
+                    );
+                  }
+                },
+                child: LoginScreen()),
+          ),
         ),
       ),
     );
@@ -49,10 +61,10 @@ class LoginScreen extends StatelessWidget {
           _userTextFieldController.text = state.loginInfo.user ?? '';
           _passTextFieldController.text = state.loginInfo.pass ?? '';
 
-          if (state.message.isNotEmpty){
-            Scaffold.of(context).showSnackBar(
-                SnackBar(content: Text("state.message")));
-          }
+//          if (state.message.isNotEmpty) {
+//            Scaffold.of(context)
+//                .showSnackBar(SnackBar(content: Text("state.message")));
+//          }
 
           return Card(
             semanticContainer: true,
