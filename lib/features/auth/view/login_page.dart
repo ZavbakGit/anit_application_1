@@ -18,14 +18,16 @@ class LoginPage extends StatelessWidget {
         child: Center(
           child: BlocProvider(
             create: (context) => LoginBloc(appModel),
-            child: BlocListener(
+            child: BlocListener<LoginBloc, LoginState>(
                 listener: (context, state) {
-                  if (state.message.isNotEmpty) {
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(state.message),
-                      ),
-                    );
+                  if (state is LoadSettingsSuccessState) {
+                    if (state.message.isNotEmpty) {
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.message),
+                        ),
+                      );
+                    }
                   }
                 },
                 child: LoginScreen()),
@@ -52,6 +54,23 @@ class LoginScreen extends StatelessWidget {
 
         if (state is LoginInProgressState) {
           return ProgressWidget();
+        }
+
+        if (state is LoginSuccess){
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center ,
+              children: <Widget>[
+                Text('${state.user.name}'),
+                RaisedButton(
+                  child: Text('Repeat'),
+                  onPressed: (){
+                    BlocProvider.of<LoginBloc>(context).add(LoadSettingsEvent());
+                  },
+                )
+              ],
+            ),
+          );
         }
 
         if (state is LoadSettingsSuccessState) {
@@ -139,17 +158,6 @@ class ProgressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircularProgressIndicator();
-
-    Container(
-      height: 300,
-      width: 400,
-      child: Card(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        elevation: 4.0,
-        child: Center(child: CircularProgressIndicator()),
-      ),
-    );
   }
 }
 

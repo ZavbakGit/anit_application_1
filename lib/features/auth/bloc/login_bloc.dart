@@ -22,8 +22,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoadSettingsSuccessState(loginInfo,null);
     }else if (event is StartLoginEvent){
       yield LoginInProgressState();
-      await Future.delayed(Duration(milliseconds: 5000));
-      yield LoadSettingsSuccessState(event.loginInfo,'Error: Time out');
+
+      await _loginRepository.setLoginFromSettings(event.loginInfo);
+      //await Future.delayed(Duration(milliseconds: 5000));
+
+      try {
+        final user = await _loginRepository.getUser(event.loginInfo);
+        yield LoginSuccess(user: user);
+      } catch (e) {
+        yield LoadSettingsSuccessState(event.loginInfo,'${e.toString()}');
+        print(e);
+      }
+
       //yield LoadSettingsSuccessState(event.loginInfo);
     }else{
       throw Exception('Unknown event');
