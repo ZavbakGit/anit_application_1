@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:anit_application/model/login_info.dart';
+import 'package:anit_application/model/tasks_programmer.dart';
 import 'package:anit_application/model/user.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,6 +17,24 @@ class ApiProvider{
       'authorization': _auth
     };
   }
+
+  Future<TasksProgrammer> getTasksUser({User user,LoginInfo loginInfo}) async {
+    final _url =
+        '${ApiConstants.anitBaseUri}/programmer_tasks?executor=${user.guid}';
+
+    final response = await http.get(_url, headers: _getHeader(loginInfo.user,loginInfo.pass))
+        .timeout(const Duration(seconds: _timeout));
+
+    if (response.statusCode == 200) {
+      final bodyUtf8 = utf8.decode(response.bodyBytes);
+      final responseModel = TasksProgrammer.fromJson(json.decode(bodyUtf8));
+      return responseModel;
+    } else {
+      throw Exception('Error fetching Tasks programmer');
+    }
+  }
+
+
   Future<User> auth({LoginInfo loginInfo}) async {
     final _url =
         '${ApiConstants.anitBaseUri}/auth';

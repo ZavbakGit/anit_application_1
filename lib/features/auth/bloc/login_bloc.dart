@@ -28,7 +28,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       try {
         final user = await _loginRepository.getUser(event.loginInfo);
-        yield LoginSuccess(user: user);
+        yield LoginSuccess(user,event.loginInfo);
       } catch (e) {
         yield LoadSettingsSuccessState(event.loginInfo,'${e.toString()}');
         print(e);

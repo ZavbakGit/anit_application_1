@@ -48,11 +48,12 @@ class LoginFailState extends LoginState {
 
 class LoginSuccess extends LoginState {
   final User user;
+  final LoginInfo loginInfo;
 
-  LoginSuccess({this.user});
+  LoginSuccess(this.user, this.loginInfo);
 
   @override
-  List<Object> get props => [user];
+  List<Object> get props => [user,loginInfo];
 }
 
 
