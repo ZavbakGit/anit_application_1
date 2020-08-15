@@ -1,4 +1,4 @@
-class Task {
+class ItemTask {
   String guid;
   String partner;
   DateTime dateStart;
@@ -8,7 +8,7 @@ class Task {
   String task;
   String comment;
 
-  Task(
+  ItemTask(
       {this.guid,
         this.partner,
         this.dateStart,
@@ -18,7 +18,7 @@ class Task {
         this.task,
         this.comment});
 
-  Task.fromJson(Map<String, dynamic> json) {
+  ItemTask.fromJson(Map<String, dynamic> json) {
     guid = json['guid'];
     partner = json['partner'];
     dateStart = DateTime.parse(json['date_start'] as String);

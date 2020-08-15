@@ -1,15 +1,15 @@
-import 'package:anit_application/model/task_programmer.dart';
+import 'item_task.dart';
 
-class TasksProgrammer {
-  List<Task> tasks;
+class ListTask {
+  List<ItemTask> tasks;
 
-  TasksProgrammer({this.tasks});
+  ListTask({this.tasks});
 
-  TasksProgrammer.fromJson(Map<String, dynamic> json) {
+  ListTask.fromJson(Map<String, dynamic> json) {
     if (json['tasks'] != null) {
-      tasks = new List<Task>();
+      tasks = new List<ItemTask>();
       json['tasks'].forEach((v) {
-        tasks.add(new Task.fromJson(v));
+        tasks.add(new ItemTask.fromJson(v));
       });
     }
   }

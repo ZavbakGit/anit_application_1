@@ -1,5 +1,5 @@
 import 'package:anit_application/model/user.dart';
 
-class ModelTasksProgrammer{
+class ModelListTaskProgrammer{
   User user;
 }

@@ -1,4 +1,4 @@
-import 'package:anit_application/model/task_programmer.dart';
+import 'package:anit_application/features/listprogrammertask/model/item_task.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ListTasksProgrammerState extends Equatable {
@@ -12,7 +12,6 @@ class InitialState extends ListTasksProgrammerState {
   List<Object> get props =>[];
 }
 
-
 class LoadInProgressState extends ListTasksProgrammerState {}
 
 class LoadFailState extends ListTasksProgrammerState {
@@ -24,9 +23,8 @@ class LoadFailState extends ListTasksProgrammerState {
   List<Object> get props =>[message];
 }
 
-
 class LoadSuccessState extends ListTasksProgrammerState {
-  final List<Task> tasks;
+  final List<ItemTask> tasks;
 
   LoadSuccessState(this.tasks);
 
