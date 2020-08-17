@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'features/auth/auth_start.dart';
 import 'features/listprogrammertask/programmer_tasks_start.dart';
 import 'features/programmertask/programmer_task_start.dart';
+import 'features/testfeature/test_feature_start.dart';
 import 'model/app_model.dart';
 import 'model/login_info.dart';
 import 'model/user.dart';
@@ -23,8 +24,10 @@ class MyApp extends StatelessWidget {
             }),
         '/programmer_tasks': (context) => ProgrammerTasksStartFeature(),
         '/programmer_task': (context) => ProgrammerTaskStartFeature(),
+        '/test_feature':(context) => TestFeatureStart(),
       },
-      initialRoute: '/',
+      //initialRoute: '/',
+      initialRoute: '/test_feature',
     );
   }
 }

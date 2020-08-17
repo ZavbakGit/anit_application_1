@@ -1,12 +1,10 @@
 import 'package:anit_application/features/auth/bloc/login_bloc.dart';
 import 'package:anit_application/features/auth/bloc/login_event.dart';
 import 'package:anit_application/features/auth/bloc/login_state.dart';
-import 'package:anit_application/model/app_model.dart';
 import 'package:anit_application/model/login_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -19,7 +17,7 @@ class LoginPage extends StatelessWidget {
           child: BlocListener<LoginBloc, LoginState>(
               listener: (context, state) {
                 if (state is LoadSettingsSuccessState) {
-                  if ((state.message??"").isNotEmpty) {
+                  if ((state.message ?? "").isNotEmpty) {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
                         content: Text(state.message),
@@ -53,18 +51,20 @@ class LoginScreen extends StatelessWidget {
           return ProgressWidget();
         }
 
-        if (state is LoginSuccess){
+        if (state is LoginSuccess) {
           return Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center ,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('${state.user.name}'),
-                RaisedButton(
-                  child: Text('Repeat'),
-                  onPressed: (){
-                    BlocProvider.of<LoginBloc>(context).add(LoadSettingsEvent());
-                  },
-                )
+                Text(''),
+//                Text('${state.user.name}'),
+//                RaisedButton(
+//                  child: Text('Repeat'),
+//                  onPressed: () {
+//                    BlocProvider.of<LoginBloc>(context)
+//                        .add(LoadSettingsEvent());
+//                  },
+//                )
               ],
             ),
           );
@@ -143,4 +143,3 @@ class ProgressWidget extends StatelessWidget {
     return CircularProgressIndicator();
   }
 }
-

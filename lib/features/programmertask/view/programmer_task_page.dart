@@ -153,6 +153,39 @@ class FieldInformation extends StatelessWidget {
           SizedBox(
             height: 20.0,
           ),
+//          Container(
+//            child: Text(
+//              title,
+//              style: TextStyle(color: Colors.blue),
+//            ),
+//          ),
+//          Divider(),
+          TextField(
+            
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FieldInformation1 extends StatelessWidget {
+  final String title;
+  final String text;
+
+  const FieldInformation1({Key key, this.title, this.text}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+      child: Column(
+        textDirection: TextDirection.ltr,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(
+            height: 20.0,
+          ),
           Container(
             child: Text(
               title,
