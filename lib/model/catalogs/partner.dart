@@ -1,7 +1,7 @@
 import 'package:anit_application/features/catalogtextfield/ctalog.dart';
 import 'dart:math';
 
-class Partner implements Catalog{
+class Partner implements Catalog1{
 
 
   @override
