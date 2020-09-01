@@ -4,6 +4,7 @@ import 'package:anit_application/features/programmertask/programmer_task.dart';
 import 'package:anit_application/model/login_info.dart';
 import 'package:anit_application/model/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class ApiProvider {
   static const _timeout = 5;
@@ -38,7 +39,7 @@ class ApiProvider {
   Future<User> auth({LoginInfo loginInfo}) async {
     final _url = '${ApiConstants.anitBaseUri}/auth';
 
-    final response = await http
+    final Response response = await http
         .get(_url, headers: _getHeader(loginInfo.user, loginInfo.pass))
         .timeout(const Duration(seconds: _timeout));
 
