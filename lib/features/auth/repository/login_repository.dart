@@ -1,6 +1,6 @@
 import 'package:anit_application/model/login_info.dart';
 import 'package:anit_application/model/user.dart';
-import 'package:anit_application/services/api_provider.dart';
+import 'package:anit_application/services/api_service/api_provider.dart';
 import 'package:anit_application/services/sharedreferece_provider.dart';
 
 class LoginRepository{
